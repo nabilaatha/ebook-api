@@ -2,7 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\BookController; 
+use App\Http\Controllers\AuthController; 
 
 /*
 |--------------------------------------------------------------------------
@@ -18,11 +18,11 @@ use App\Http\Controllers\BookController;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::get('/me','App\Http\Controllers\AuthController@me');
+Route::post('/me', [AuthController::class, 'me'])->middleware('auth:sanctum');
 
-Route::get('/ebook','App\Http\Controllers\BookController@index');
-Route::post('/ebook', 'App\Http\Controllers\BookController@create');
-Route::put('/ebook/{id}', 'App\Http\Controllers\BookController@update');
-Route::delete('/ebook/{id}', 'App\Http\Controllers\BookController@delete');
+Route::resource('book', "\App\Http\Controllers\BookController")->except('edit', 'create')->middleware('auth:sanctum');
+Route::resource('author', "\App\Http\Controllers\AuthorController")->except('edit', 'create')->middleware('auth:sanctum');
 
+Route::post('/register', [AuthController::class, 'register']);
+Route::post('/login', [AuthController::class, 'login']);
  

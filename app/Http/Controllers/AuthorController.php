@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Book;
+use App\Models\Author;
 
-class BookController extends Controller
+class AuthorController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,10 +14,10 @@ class BookController extends Controller
      */
     public function index()
     {
-        $book = Book::get();
+        $author = Author::get();
         return response()->json([
             'status' => 200,
-            'data' => $book
+            'data' => $author
         ], 200);
     }
 
@@ -39,18 +39,19 @@ class BookController extends Controller
      */
     public function store(Request $request)
     {
-        $book = new Book();
-        $book->title = $request->title;
-        $book->description = $request->description;
-        $book->author = $request->author;
-        $book->publisher = $request->publisher;
-        $book->date_of_issue = $request->date_of_issue;
-        $book->save();
-        if($book->save()){
+        $author = new Author();
+        $author->name = $request->name;
+        $author->date_of_birth = $request->date_of_birth;
+        $author->place_of_birth = $request->place_of_birth;
+        $author->gender = $request->gender;
+        $author->email = $request->email;
+        $author->no_hp = $request->no_hp;
+        $author->save();
+        if($author->save()){
             return response()->json([
                 'status' => 201,
                 'message' => 'Data Berhasil Di Simpan!',
-                'data' => $book
+                'data' => $author
             ], 201);
         }
         else{
@@ -69,12 +70,12 @@ class BookController extends Controller
      */
     public function show($id)
     {
-        $book = Book::find($id);
-        if($book){
+        $author = Author::find($id);
+        if($author){
             return response()->json([
                 'status' => 200,
                 'message' => 'Data berhasil ditemukan!',
-                'data' => $book
+                'data' => $author
             ], 200);
         }
         else{
@@ -105,18 +106,19 @@ class BookController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $book = Book::find($id);
-        if($book){
-            $book->title = $request->title ? $request->title : $book->title;
-            $book->description = $request->description ? $request->description : $book->description;
-            $book->author = $request->author ? $request->author : $book->author;
-            $book->publisher = $request->publisher ? $request->publisher : $book->publisher;
-            $book->date_of_issue = $request->date_of_issue ? $request->date_of_issue : $book->date_of_issue;
-            $book->save();
+        $author = Author::find($id);
+        if($author){
+            $author->name = $request->name ? $request->name : $author->name;
+            $author->date_of_birth = $request->date_of_birth ? $request->date_of_birth : $author->date_of_birth;
+            $author->place_of_birth = $request->place_of_birth ? $request->place_of_birth : $author->place_of_birth;
+            $author->gender = $request->gender ? $request->gender : $author->gender;
+            $author->email = $request->email ? $request->email : $author->email;
+            $author->no_hp = $request->no_hp ? $request->no_hp : $author->no_hp;
+            $author->save();
             return response()->json([
                 'status' => 200,
                 'message' => 'Data berhasil diubah!',
-                'data' => $book
+                'data' => $author
             ], 200);
         }
         else{
@@ -135,9 +137,9 @@ class BookController extends Controller
      */
     public function destroy($id)
     {
-        $book = Book::find($id);
-        if($book){
-            $book->delete();
+        $author = Author::find($id);
+        if($author){
+            $author->delete();
             return response()->json([
                 'status' => 200,
                 'message' => 'Data Id ' . $id . ' Berhasil dihapus!'
@@ -149,6 +151,5 @@ class BookController extends Controller
                 'message' => 'Id ' . $id . ' tidak ditemukan!'
             ], 404);
         }
-        
     }
 }

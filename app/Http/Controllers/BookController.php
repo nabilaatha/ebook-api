@@ -39,7 +39,7 @@ class BookController extends Controller
     }
     public function show($id){
         $data = Book::find($id);
-        if($book){
+        if($data){
             return[ 
             'status' => '200',
             'Message' => 'Data showed',

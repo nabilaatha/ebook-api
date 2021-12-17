@@ -2,7 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\BookController; 
+use App\Http\Controllers\BookController;  
 
 /*
 |--------------------------------------------------------------------------
@@ -18,11 +18,12 @@ use App\Http\Controllers\BookController;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::get('/me','App\Http\Controllers\AuthController@me');
+Route::post('/me', [AuthController::class, 'me']);
 
-Route::get('/ebook','App\Http\Controllers\BookController@index');
-Route::post('/ebook', 'App\Http\Controllers\BookController@create');
-Route::put('/ebook/{id}', 'App\Http\Controllers\BookController@update');
-Route::delete('/ebook/{id}', 'App\Http\Controllers\BookController@delete');
-
+// Route::get('/ebook','App\Http\Controllers\BookController@index');
+// Route::post('/ebook', 'App\Http\Controllers\BookController@create');
+// Route::put('/ebook/{id}', 'App\Http\Controllers\BookController@update');
+// Route::delete('/ebook/{id}', 'App\Http\Controllers\BookController@delete');
+Route::resource('book', BookController::class)->except('edit', 'create');
+Route::resource('author', "\App\Http\Controllers\AuthorController")->except('edit', 'create');
  
